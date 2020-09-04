@@ -10,6 +10,7 @@ output_file = 'metrics.csv'
 data_folder_path_lst = glob.glob('/mnt/c/Users/willl/Downloads/data_comp_200827/*')
 onprem_csv_path = '/mnt/c/Users/willl/Downloads/20200831_3.csv'
 
+#build data frame of all_metrics.json
 df = pd.DataFrame({})
 FCs = [n[-9:] for n in data_folder_path_lst]
 for i in data_folder_path_lst:
@@ -22,14 +23,14 @@ for i in data_folder_path_lst:
 df = df.reset_index()
 df = df.drop('index', axis=1)
 
-# build dataframe of all_sample_barcode_metrics
-df_bcm = pd.DataFrame({})
-for i in data_folder_path_lst:
-    n = data_folder_path_lst.index(i)
-    df_bcm1 = pd.read_json(data_folder_path_lst[n] + '/all_sample_barcode_metrics.json', orient='index')
-    df_bcm1['fc'] = FCs[n]
-    df_bcm1['recommended_name'] = df_bcm1['fc'] + '_' + df_bcm1['barcode']
-    df_bcm = pd.concat([df_bcm, df_bcm1])
+# # build dataframe of all_sample_barcode_metrics - not needed - because all information in sample_barcode_metrics is also in all_metrics.json
+# df_bcm = pd.DataFrame({})
+# for i in data_folder_path_lst:
+#     n = data_folder_path_lst.index(i)
+#     df_bcm1 = pd.read_json(data_folder_path_lst[n] + '/all_sample_barcode_metrics.json', orient='index')
+#     df_bcm1['fc'] = FCs[n]
+#     df_bcm1['recommended_name'] = df_bcm1['fc'] + '_' + df_bcm1['barcode']
+#     df_bcm = pd.concat([df_bcm, df_bcm1])
 
 #build dataframe of dupe_metrics
 df_dupe = pd.DataFrame({})
@@ -45,16 +46,18 @@ for i in data_folder_path_lst:
         df_dupe = pd.concat([df_dupe, df_dupe1])
 
 # merge dataframes
-df_final = df.merge(df_bcm, how='left', on='recommended_name', suffixes=('_all_met_json', '_all_sample_bc_metrics_json'))
-df_final = df_final.merge(df_dupe, how='left', on='recommended_name')
+#df_final = df.merge(df_bcm, how='left', on='recommended_name', suffixes=('_all_met_json', '_all_sample_bc_metrics_json'))
+df_final = df.merge(df_dupe, how='left', on='recommended_name')
 
 # onprem data
 onprem_df = pd.read_csv(onprem_csv_path)
 onprem_df['recommended_name'] = onprem_df['RUN_NAME'] + '_' + onprem_df['BARCODE']
 onprem_df['onprem_mapping_efficiency'] = onprem_df['DUPLICATE_CLONES_DENOMINATOR'] / onprem_df['NUM_ELIGIBLE_READS']
 onprem_df['onprem_clonality'] = onprem_df['DUPLICATE_CLONES_NUMERATOR'] / onprem_df['DUPLICATE_CLONES_DENOMINATOR']
-df_final = df_final.merge(onprem_df, how='left', on='recommended_name')
-df_final['match_count_2x'] = df_final['match_count_all_met_json']*2
+
+#Merge cloud and onprem data
+df_final = df_final.merge(onprem_df, how='left', on='recommended_name', suffixes=('_dx', '_onprem'))
+df_final['match_count_2x'] = df_final['match_count']*2
 df_final['calc_num_mapped_clone_reads'] = df_final['match_count_2x'] - df_final['SECONDARY_OR_SUPPLEMENTARY_RDS'] - df_final['UNMAPPED_READS'] - df_final['UNPAIRED_READ_DUPLICATES'] - df_final['READ_PAIR_DUPLICATES']
 df_final['calc_mapping_efficiency'] = (df_final['calc_num_mapped_clone_reads'] + df_final['READ_PAIR_DUPLICATES']) / df_final['match_count_2x']
 
@@ -70,5 +73,5 @@ df_final_out = df_final.loc[:,['recommended_name', 'NUM_MAPPED_CLONE_READS', 'NU
                                'ACCESSION_ID'
                                ]]
 
-df_final_out.to_csv('/mnt/c/Users/willl/Downloads/test_20200831.csv')
+#df_final_out.to_csv('/mnt/c/Users/willl/Downloads/test_20200831_new.csv')
 
