@@ -8,7 +8,7 @@ import glob
 #sample = sys.argv[1]
 output_file = 'metrics.csv'
 data_folder_path_lst = glob.glob('/mnt/c/Users/willl/Downloads/data_comp_200827/*')
-onprem_csv_path = '/mnt/c/Users/willl/Downloads/20200831_3.csv'
+onprem_csv_path = '/mnt/c/Users/willl/Downloads/on-prem_run_metrics_data_20200909.csv'
 
 #build data frame of all_metrics.json
 df = pd.DataFrame({})
@@ -63,12 +63,12 @@ df_final = df_final.merge(onprem_df, how='left', on='recommended_name')
 # df_final['calc_mapping_efficiency'] = (df_final['calc_num_mapped_clone_reads'] + df_final['READ_PAIR_DUPLICATES']) / df_final['match_count_2x']
 
 # prep final df and do mapped clone reads calculation
-df_final_out = df_final.loc[:,['match_count', 'UNPAIRED_READS_EXAMINED', 'READ_PAIRS_EXAMINED', 'SECONDARY_OR_SUPPLEMENTARY_RDS', 'UNMAPPED_READS',
+df_final_out = df_final.loc[:,['match_count', 'sample', 'mapped_reads', 'UNPAIRED_READS_EXAMINED', 'READ_PAIRS_EXAMINED', 'SECONDARY_OR_SUPPLEMENTARY_RDS', 'UNMAPPED_READS',
                                'UNPAIRED_READ_DUPLICATES', 'READ_PAIR_DUPLICATES', 'READ_PAIR_OPTICAL_DUPLICATES', 'PERCENT_DUPLICATION',
                                'recommended_name', 'AVG_NUM_FORWARD_READS', 'AVG_NUM_REVERSE_READS', 'AVG_NUM_CLONE_READS', 'AVG_NUM_AMPLICON_CLONE_READS',
                                'NUM_MAPPED_CLONE_READS', 'NUM_MAPPED_FORWARD_READS', 'NUM_MAPPED_REVERSE_READS', 'NUM_ELIGIBLE_READS',
                                'TARGET_NUM_ALLELES_CV', 'DUPLICATE_CLONES_NUMERATOR', 'DUPLICATE_CLONES_DENOMINATOR']]
 
 
-#df_final.to_csv('/mnt/c/Users/willl/Downloads/test_20200831_new_.csv')
+df_final_out.to_csv('/mnt/c/Users/willl/Downloads/960_sample_data_4.csv')
 

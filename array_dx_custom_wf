@@ -1,0 +1,231 @@
+#!/bin/bash
+
+# Jobs to run on custom workflow
+array1=(
+job-Fv7qg6j0J4315GzXJkXpx1pF
+job-Fv7qg7Q0J433PqpF8v4gyjgv
+job-Fv7qg8Q0J435KXJv8qg8K2bx
+job-Fv7qfx00J43PYGQb8qYFgx7k
+job-Fv7qfy00J436Y8zQ8v05Y1Bv
+job-Fv7qfyj0J43F8P5G8vgv70bg
+job-Fv7qfzj0J43KQP2z8vB15zZ5
+job-Fv7qg0j0J431B1zj91JJg9Fq
+job-Fv7qg1j0J4330KpY8fVkgy4G
+job-Fv7qg2j0J43Ffgz28fGQgzJj
+job-Fv7qg3j0J437PFqYJkzQ1gjZ
+job-Fv7qg4j0J435kGBB8yf8fG12
+job-Fv7qg5j0J4352qVPJjyxQ7yB
+job-Fv7qfb80J43744v98f73FXYj
+job-Fv7qff80J430XZ098vXjFjq4
+job-Fv7qfg80J43PK88q910JY66f
+job-Fv7qfj80J431B1zj91JJg99q
+job-Fv7qfk80J43B5ZqF8vp08k5Z
+job-Fv7qfp80J4309XJz917kJG6F
+job-Fv7qfq80J4330KpY8fVkgy32
+job-Fv7qfv80J43KQP2z8vB15zY0
+job-Fv7qf9Q0J438yXxF8yvpJFGb
+job-Fv7qfBQ0J436Y8zQ8v05Y18p
+job-Fv7qfFQ0J435kGBB8yf8fFvz
+job-Fv7qfG80J43F8P5G8vgv70XV
+job-Fv7qfJQ0J435KXJv8qg8K2X3
+job-Fv7qfKQ0J43KF2bg8fv2XxKQ
+job-Fv7qfPj0J4366bP691XBy3p2
+job-Fv7qfV00J4366bP691XBy3pj
+job-Fv7qfX80J434VB5B8vPQ55Zx
+job-Fv7qfY80J437PFqYJkzQ1gfX
+job-Fv7qfZ00J43878QzJkP38Fpb
+job-Fv7qf380J43PK88q910JY61x
+job-Fv7qf480J432P5jg91g9VPFK
+job-Fv7qf5Q0J43Bfx1P8z440v38
+job-Fv7qf6Q0J433PqpF8v4gyjKj
+job-Fv7qf7Q0J434gX67JkjxGvf5
+job-Fv7qf8Q0J43B9FYJJjqZp3g4
+job-Fv7qbg80J43GfVZx8y99KfGy
+job-Fv7qbj00J4315GzXJkXpx1bF
+job-Fv7qbk00J43B9FYJJjqZp3Z2
+job-Fv7qbp00J435kGBB8yf8fFkb
+job-Fv7qbq00J430XZ098vXjFjbj
+job-Fv7qbv00J43F2X9x8yQQ70k8
+job-Fv7qbx80J43PYGQb8qYFgx3K
+job-Fv7qby80J43PFKqz8qjJkgkY
+job-Fv7qbzQ0J43B9FYJJjqZp3bf
+job-Fv7qf0j0J43JKpBY8yFxqYgZ
+job-Fv7qf1Q0J434gX67JkjxGvZY
+job-Fv7qbJj0J43Ffgz28fGQgz3G
+job-Fv7qbKj0J43B5ZqF8vp08jxx
+job-Fv7qbPj0J43Ffgz28fGQgz41
+job-Fv7qbQj0J4340V8p920Zf7f1
+job-Fv7qbVj0J43KF2bg8fv2Xx85
+job-Fv7qbXj0J43F2X9x8yQQ70gQ
+job-Fv7qbZ00J435KXJv8qg8K2GJ
+job-Fv7qbb80J4352bGf8fgJqPj7
+job-Fv7qbf80J43F2X9x8yQQ70j0
+job-Fv7qb6j0J43878QzJkP38FY3
+job-Fv7qb7Q0J434Kyqy8qzFP4K0
+job-Fv7qb980J43PK88q910JY5x1
+job-Fv7qbB80J430g6z68vGfGGvj
+job-Fv7qbF80J43Jkfx08qp04Vf6
+job-Fv7qbGj0J434kpZ48v944GYk
+job-Fv7qZyQ0J434VB5B8vPQ55J2
+job-Fv7qZz80J434gX67JkjxGvQy
+job-Fv7qb080J43B0vz68y4GgQq4
+job-Fv7qb180J432bfZqJk900YPG
+job-Fv7qb280J434qYkq8z7bJ4ky
+job-Fv7qb3Q0J43F2X9x8yQQ70b6
+job-Fv7qb4Q0J435KXJv8qg8K2B0
+job-Fv7qb5Q0J434gX67JkjxGvVj
+job-Fv7qZgQ0J434Kyqy8qzFP4FB
+job-Fv7qZjj0J436Y8zQ8v05Y10v
+job-Fv7qZkj0J43878QzJkP38FVF
+job-Fv7qZpQ0J437PFqYJkzQ1g53
+job-Fv7qZqQ0J43KQP2z8vB15yx9
+job-Fv7qZvQ0J43PBQFVJk3YQqzZ
+job-Fv7qZxQ0J436Y8zQ8v05Y11b
+job-Fv7qZX80J43PpvZk8f2pQKVF
+job-Fv7qZY80J43PpvZk8f2pQKVq
+job-Fv7qZZ80J434Kyqy8qzFP3yB
+job-Fv7qZbQ0J43PFKqz8qjJkgZQ
+job-Fv7qZfQ0J43B5ZqF8vp08jkX
+job-Fv7qZV80J431B1zj91JJg8Z7
+job-Fv7qZ9j0J434kpZ48v944GKx
+job-Fv7qZF00J43B5ZqF8vp08jgQ
+job-Fv7qZG00J43PpvZk8f2pQKQF
+job-Fv7qZJ80J4340V8p920Zf7KV
+job-Fv7qZK80J432P5jg91g9VKf1
+job-Fv7qZP80J434Kyqy8qzFP3p3
+job-Fv7qZQQ0J430XZ098vXjFjKq
+job-Fv7qg400J435kGBB8yf8fG0j
+job-Fv7qg500J434VB5B8vPQ55jb
+job-Fv7qg600J43PYGQb8qYFgx96
+job-Fv7qg700J43F2X9x8yQQ710X
+job-Fv7qg7j0J4330KpY8fVkgy5X
+job-Fv7qg900J4330KpY8fVkgy5p
+job-Fv7qgB00J4340V8p920Zf8Bp
+job-Fv7qZ5Q0J437PFqYJkzQ1g31
+job-Fv7qZ680J438yXxF8yvpJF63
+job-Fv7qZ7Q0J43878QzJkP38FKp
+job-Fv7qZ8Q0J43JKpBY8yFxqYQg
+job-Fv7qfjQ0J43PBQFVJk3YQv6x
+job-Fv7qfkQ0J434VB5B8vPQ55fZ
+job-Fv7qfpQ0J431B1zj91JJg9B7
+job-Fv7qfqQ0J430kgVv8bzXF41z
+job-Fv7qfvQ0J430kgVv8bzXF42G
+job-Fv7qfx80J430kgVv8bzXF42g
+job-Fv7qfy80J43B5ZqF8vp08k6P
+job-Fv7qfz80J43Gqf8G8v316526
+job-Fv7qg000J43616QJ91xbJbjK
+job-Fv7qg100J43F8P5G8vgv70f8
+job-Fv7qg200J434qYkq8z7bJ52b
+job-Fv7qg300J43878QzJkP38Fv8
+job-Fv7qfP00J433PqpF8v4gyjQJ
+job-Fv7qfQ00J43F2X9x8yQQ70vp
+job-Fv7qfV00J4346bjF8qq7kQX4
+job-Fv7qfX80J43Jkfx08qp04Vy4
+job-Fv7qfYQ0J4352bGf8fgJqPyQ
+job-Fv7qfZQ0J435KXJv8qg8K2Y7
+job-Fv7qfbQ0J430kgVv8bzXF40b
+job-Fv7qffQ0J43KF2bg8fv2XxPy
+job-Fv7qfgQ0J43KF2bg8fv2XxQV
+job-Fv7qf300J4352qVPJjyxQ7p2
+job-Fv7qf400J437PFqYJkzQ1gXZ
+job-Fv7qf580J432bfZqJk900YZ3
+job-Fv7qf6Q0J43PBQFVJk3YQv4X
+job-Fv7qf780J434gX67JkjxGvf2
+job-Fv7qf8Q0J434qYkq8z7bJ4z3
+job-Fv7qf9Q0J4352bGf8fgJqPv0
+job-Fv7qfBj0J43KF2bg8fv2XxJq
+job-Fv7qfFj0J4346bjF8qq7kQQ5
+job-Fv7qfGj0J43B9FYJJjqZp3j1
+job-Fv7qfK00J4346bjF8qq7kQV7
+job-Fv7qbbQ0J43GZV0g9153gJQ9
+job-Fv7qbfQ0J43Jkfx08qp04Vj7
+job-Fv7qbgQ0J43GZV0g9153gJQp
+job-Fv7qbjQ0J43616QJ91xbJbPy
+job-Fv7qbkj0J43PpvZk8f2pQKjY
+job-Fv7qbpj0J43PFKqz8qjJkgjf
+job-Fv7qbqj0J435kGBB8yf8fFpJ
+job-Fv7qbvj0J43744v98f73FXK5
+job-Fv7qbxj0J43PK88q910JY60b
+job-Fv7qbyj0J43B5ZqF8vp08k0X
+job-Fv7qf080J43Jkfx08qp04Vkq
+job-Fv7qf180J43744v98f73FXPF
+job-Fv7qb980J437PFqYJkzQ1gKP
+job-Fv7qbB00J43PYGQb8qYFgx0p
+job-Fv7qbF00J43PBQFVJk3YQv14
+job-Fv7qbG80J43PK88q910JY5xp
+job-Fv7qbJ00J43KF2bg8fv2Xx7F
+job-Fv7qbK80J43Ffgz28fGQgz3b
+job-Fv7qbP80J4340V8p920Zf7bP
+job-Fv7qbQ00J431B1zj91JJg8ky
+job-Fv7qbV00J43PK88q910JY5yy
+job-Fv7qbX80J43Gqf8G8v3164p8
+job-Fv7qbY80J43Bfx1P8z440v1K
+job-Fv7qbZQ0J43KF2bg8fv2Xx8V
+job-Fv7qZy00J436Y8zQ8v05Y11x
+job-Fv7qZyj0J43PYGQb8qYFgvzg
+job-Fv7qZzj0J43F8P5G8vgv700G
+job-Fv7qb0j0J43FjB4K8g21vJKf
+job-Fv7qb1Q0J43FjB4K8g21vJKv
+job-Fv7qb2j0J43PpvZk8f2pQKZ6
+job-Fv7qb3j0J430XZ098vXjFjXP
+job-Fv7qb4j0J43PFKqz8qjJkgbX
+job-Fv7qb5j0J433PqpF8v4gyj96
+job-Fv7qb6j0J434VB5B8vPQ55K5
+job-Fv7qb7j0J436Y8zQ8v05Y13B
+job-Fv7qZYQ0J43Bfx1P8z440qx7
+job-Fv7qZZQ0J4346bjF8qq7kQ4Q
+job-Fv7qZbQ0J43F2X9x8yQQ70YG
+job-Fv7qZfQ0J43616QJ91xbJb6f
+job-Fv7qZgQ0J4340V8p920Zf7QZ
+job-Fv7qZk00J431B1zj91JJg8bv
+job-Fv7qZp00J4330KpY8fVkgxfy
+job-Fv7qZq00J4366bP691XBy3VP
+job-Fv7qZv00J43JKpBY8yFxqYYK
+job-Fv7qZx00J43B9FYJJjqZp3Qg
+job-Fv7qZ7j0J434Kyqy8qzFP3bf
+job-Fv7qZ8j0J4340V8p920Zf7JQ
+job-Fv7qZB00J43Gqf8G8v3164KG
+job-Fv7qZFQ0J43PK88q910JY5fj
+job-Fv7qZGQ0J430kgVv8bzXF30B
+job-Fv7qZJQ0J43KQP2z8vB15yqb
+job-Fv7qZKQ0J43Bfx1P8z440qvP
+job-Fv7qZPQ0J4315GzXJkXpx1Jj
+job-Fv7qZQQ0J43878QzJkP38FQ9
+job-Fv7qZV80J43PYGQb8qYFgvy3
+job-Fv7qZX80J435kGBB8yf8fFbQ
+job-Fv7qZ6Q0J43GfVZx8y99Kf8G
+)
+
+t=0
+
+for i in ${array1[*]}; 
+    do
+        dx run myelin_dts_workflows:/workflows/seq_pipeline/cdcf82d6/f35acf7a/original_bam_to_final_bam --clone "${array1[t]}" --destination myRisk_dev:/testing/jwl/"H73JWBCX3" --yes
+        t=$t+1
+    done
+
+
+
+# for i in ${array1[*]}; 
+#     do
+#         dx download -f $i -o "${array2[t]}"
+#         t=$t+1
+#     done
+
+# find . -name "*.vcf" -print0 | while read -d $'\0' file;
+# do
+#     bgzip -c $file >$file.gz
+# done 
+
+# find $control $experimental -name "*.vcf.gz" -print0 | while read -d $'\0' file;
+# do
+#     tabix -p vcf $file
+# done 
+
+
+###
+#step1 - regions
+#for i in *.vcf.gz; do bcftools view -R ../aiSNPSregion.bed $i > $i.out.vcf; done
+
+#step2
+#for i in *.out.vcf; do bcftools annotate -x ^INFO/AS_SB_TABLE $i > $i.out2.vcf; done
