@@ -4,11 +4,14 @@ import csv
 import pandas as pd
 import glob
 
-#sample='/mnt/c/Users/willl/Downloads/data_comp_200827/H73JNBCX3/all_metrics.json'
-#sample = sys.argv[1]
-output_file = 'metrics.csv'
-data_folder_path_lst = glob.glob('/mnt/c/Users/willl/Downloads/data_comp_200827/*')
-onprem_csv_path = '/mnt/c/Users/willl/Downloads/on-prem_run_metrics_data_20200909.csv'
+data_folder_path = sys.argv[1]
+#data_folder_path = '/mnt/c/Users/willl/Downloads/data_comp_200827'
+data_folder_path_lst = glob.glob(data_folder_path + '/*')
+onprem_csv_path = sys.argv[2]
+#onprem_csv_path = '/mnt/c/Users/willl/Downloads/on-prem_run_metrics_data_20200909.csv'
+output_file = sys.argv[3]
+#output_file = '/mnt/c/Users/willl/Downloads/data_comp_200827/test.csv'
+##example usage:  python parse-metrics.py /mnt/c/Users/willl/Downloads/data_comp_200827 /mnt/c/Users/willl/Downloads/on-prem_run_metrics_data_20200909.csv /mnt/c/Users/willl/Downloads/test.csv
 
 #build data frame of all_metrics.json
 df = pd.DataFrame({})
@@ -53,8 +56,8 @@ df_final = df.merge(df_dupe, how='left', on='recommended_name')
 # onprem data
 onprem_df = pd.read_csv(onprem_csv_path)
 onprem_df['recommended_name'] = onprem_df['RUN_NAME'] + '_' + onprem_df['BARCODE']
-onprem_df['onprem_mapping_efficiency'] = onprem_df['DUPLICATE_CLONES_DENOMINATOR'] / onprem_df['NUM_ELIGIBLE_READS']
-onprem_df['onprem_clonality'] = onprem_df['DUPLICATE_CLONES_NUMERATOR'] / onprem_df['DUPLICATE_CLONES_DENOMINATOR']
+#onprem_df['onprem_mapping_efficiency'] = onprem_df['DUPLICATE_CLONES_DENOMINATOR'] / onprem_df['NUM_ELIGIBLE_READS']
+#onprem_df['onprem_clonality'] = onprem_df['DUPLICATE_CLONES_NUMERATOR'] / onprem_df['DUPLICATE_CLONES_DENOMINATOR']
 
 #Merge cloud and onprem data
 df_final = df_final.merge(onprem_df, how='left', on='recommended_name')
@@ -70,5 +73,5 @@ df_final_out = df_final.loc[:,['match_count', 'sample', 'mapped_reads', 'UNPAIRE
                                'TARGET_NUM_ALLELES_CV', 'DUPLICATE_CLONES_NUMERATOR', 'DUPLICATE_CLONES_DENOMINATOR']]
 
 
-df_final_out.to_csv('/mnt/c/Users/willl/Downloads/960_sample_data_4.csv')
+df_final_out.to_csv(output_file)
 
