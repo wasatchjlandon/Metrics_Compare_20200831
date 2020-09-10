@@ -1,5 +1,11 @@
 # parse-metrics.py
 
+Installation 
+============
+(Requires virtualenv (sudo pip install virtualenv). Better done off VPN.)
+1. `make venv`
+2. `source .venv-evaluate/bin/activate`
+
 ## Inputs
 >* Path to directory with data (see data structure below).
 >* SHREK sql query results as path to .csv. 

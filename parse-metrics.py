@@ -34,8 +34,8 @@ df = df.drop('index', axis=1)
 #     df_bcm1['fc'] = FCs[n]
 #     df_bcm1['recommended_name'] = df_bcm1['fc'] + '_' + df_bcm1['barcode']
 #     df_bcm = pd.concat([df_bcm, df_bcm1])
-
 #build dataframe of dupe_metrics
+
 df_dupe = pd.DataFrame({})
 for i in data_folder_path_lst:
     n = data_folder_path_lst.index(i)
@@ -68,7 +68,7 @@ df_final = df_final.merge(onprem_df, how='left', on='recommended_name')
 # prep final df and do mapped clone reads calculation
 df_final_out = df_final.loc[:,['match_count', 'sample', 'mapped_reads', 'UNPAIRED_READS_EXAMINED', 'READ_PAIRS_EXAMINED', 'SECONDARY_OR_SUPPLEMENTARY_RDS', 'UNMAPPED_READS',
                                'UNPAIRED_READ_DUPLICATES', 'READ_PAIR_DUPLICATES', 'READ_PAIR_OPTICAL_DUPLICATES', 'PERCENT_DUPLICATION',
-                               'recommended_name', 'AVG_NUM_FORWARD_READS', 'AVG_NUM_REVERSE_READS', 'AVG_NUM_CLONE_READS', 'AVG_NUM_AMPLICON_CLONE_READS',
+                               'recommended_name', 'AVG_NUM_FORWARD_READS', 'AVG_NUM_REVERSE_READS', 'AVG_NUM_CLONE_READS',
                                'NUM_MAPPED_CLONE_READS', 'NUM_MAPPED_FORWARD_READS', 'NUM_MAPPED_REVERSE_READS', 'NUM_ELIGIBLE_READS',
                                'TARGET_NUM_ALLELES_CV', 'DUPLICATE_CLONES_NUMERATOR', 'DUPLICATE_CLONES_DENOMINATOR']]
 
