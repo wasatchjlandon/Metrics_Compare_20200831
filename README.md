@@ -4,12 +4,12 @@ Installation
 ============
 (Requires virtualenv (sudo pip install virtualenv). Better done off VPN.)
 1. `make venv`
-2. `source .venv-evaluate/bin/activate`
+2. `source .venv-metrics/bin/activate`
 
 ## Inputs
->* Path to directory with data (see data structure below).
+>* Path to directory with data (see directory/data structure below).
 >* SHREK sql query results as path to .csv. 
->* Output file path/name.csv
+>* Output file path/name.csv.
 
 ###
 Example Usage:
