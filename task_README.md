@@ -6,7 +6,7 @@
  The goal is to identify metrics that can be used for analogs/substitutes/surrogates of the legacy metrics:  mapping efficiency and clonality .
 
  Tech dev archive and write-up here (update with techdev path):
->* https://mygn.atlassian.net/browse/MPD-115?atlOrigin=eyJpIjoiYWI4NDY5YTM4Y2U2NGE4NGI1NzQzZWI5MDY3OGQzMWMiLCJwIjoiaiJ9
+>* W:\MGL\Technology Development\PROJECT_DEVEL\Biosphere\20200909 - Clonality and mapping efficiency
 
 ### FCs analyzed:
 
