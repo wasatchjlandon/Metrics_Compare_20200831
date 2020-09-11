@@ -18,11 +18,12 @@ dts-spar6152-job19306-H73KFBCX3_SPAR_EXP6152/
 dts-spar6152-job19307-H73KGBCX3_SPAR_EXP6152/
 dts-spar6152-job19308-H73KHBCX3_SPAR_EXP6152/
 ```
+>* 960 samples.
 ### Seq_pipeline data:
 To pull data analyzed by seq-pipeline I followed Thad's protocol below:
 >* https://mygn.atlassian.net/l/c/9zTyj70P
 
-The seq_pipeline branch "collect_mark_duplicates_metrics_thad" was used to generate MarkDuplicates reports (*.dupe_metrics.txt; see link above for details). The branch utilizes a modified seq_pipeline/wdl/tools/bam.wdl that contains additional instructions for the original_bam_to_final_bam process that writes an output file with metrics that are typically not preserved. To run the modified branch a workflow is created using spar. The workflow-FvbXyF006GZ0jxxk6GjG6bj8 was created for this analysis. The jobs that originally created final.bam can be `dx run` (re-run) with the modified workflow and process step `myelin_dts_workflows:/workflows/seq_pipeline/cdcf82d6/f35acf7a/original_bam_to_final_bam` (see array_dx_custom_wf for specific command and options; see Thad's write-up https://mygn.atlassian.net/l/c/9zTyj70P).  
+The seq_pipeline branch "collect_mark_duplicates_metrics_thad" was used to generate MarkDuplicates reports (*.dupe_metrics.txt; see link above for details). The branch utilizes a modified seq_pipeline/wdl/tools/bam.wdl that contains additional instructions for the original_bam_to_final_bam process that writes an output file with metrics that are typically not preserved. To run the modified branch a workflow is created using spar. The workflow-FvbXyF006GZ0jxxk6GjG6bj8 was created for this analysis. The jobs that originally created final.bam's of interest can be `dx run` (re-run) with the modified workflow and process step `myelin_dts_workflows:/workflows/seq_pipeline/cdcf82d6/f35acf7a/original_bam_to_final_bam` (see array_dx_custom_wf for specific command and options; see Thad's write-up https://mygn.atlassian.net/l/c/9zTyj70P for more details).  
 
 #### Workflow:  collects 1 FC of data at a time:
 
