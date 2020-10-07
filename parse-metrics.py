@@ -4,24 +4,13 @@ import csv
 import pandas as pd
 import glob
 
-# function to get unique values 
-def unique(list1): 
-    # intilize a null list 
-    unique_list = [] 
-    # traverse for all elements 
-    for x in list1: 
-        # check if exists in unique_list or not 
-        if x not in unique_list: 
-            unique_list.append(x)
-    return(unique_list)
-
 #data_folder_path = sys.argv[1]
 data_folder_path = '/mnt/c/Users/willl/Downloads/data_comp_200827'
 data_folder_path_lst = glob.glob(data_folder_path + '/*')
 #onprem_csv_path = sys.argv[2]
 onprem_csv_path = '/mnt/c/Users/willl/Downloads/on-prem_run_metrics_data_20200909.csv'
 #output_file = sys.argv[3]
-output_file = '/mnt/c/Users/willl/Downloads/data_comp_200827/test20201006.csv'
+output_file = '/mnt/c/Users/willl/Downloads/test20201006_3.csv'
 ##example usage:  python parse-metrics.py /mnt/c/Users/willl/Downloads/data_comp_200827 /mnt/c/Users/willl/Downloads/on-prem_run_metrics_data_20200909.csv /mnt/c/Users/willl/Downloads/test.csv
 ## exec(open('/home/wlandon/Projects/Metrics_Compare_20200831/parse-metrics.py').read())
 
@@ -58,7 +47,7 @@ for i in data_folder_path_lst:
     df_all = pd.concat([df_all, df1_all])
     df_all = df_all[df_all['Barcode sequence'] != 'unknown']
 
-#sum lane 1 and 2 results
+#sum all_barcodes.htlm lane 1 and 2 results for a single set of statistics per sample
 df_all = df_all.loc[:, ['Lane', 'PF Clusters', 'Yield (Mbases)', '% PFClusters', '% >= Q30bases', 'Mean QualityScore', 'recommended_name']]
 aggregation_functions = {'Lane':'mean', 'PF Clusters':'sum', 'Yield (Mbases)':'sum', '% PFClusters':'mean', '% >= Q30bases':'mean', 'Mean QualityScore':'mean'}
 df_all = df_all.groupby('recommended_name').aggregate(aggregation_functions)
@@ -69,34 +58,43 @@ df_dupe = pd.DataFrame({})
 for i in data_folder_path_lst:
     n = data_folder_path_lst.index(i)
     files1_lst = glob.glob(i + '/' + '*dupe_metrics.txt')
-    for i2 in files1_lst:
-        n2 = files1_lst.index(i2)
+    for f in files1_lst:
+        n2 = files1_lst.index(f)
         df_dupe1 = pd.read_csv(files1_lst[n2], sep='\t', skiprows=6, nrows=1)
         df_dupe1['fc'] = FCs[n]
         df_dupe1['barcode'] = files1_lst[n2].split('/')[-1].split('.')[-3].split('_')[-1]
         df_dupe1['recommended_name'] = df_dupe1['fc'] + '_' + df_dupe1['barcode']
         df_dupe = pd.concat([df_dupe, df_dupe1])
 
-# merge dataframes
+#build data frame of all_metrics.json
+df_json = pd.DataFrame({})
+for i in data_folder_path_lst:
+    n = data_folder_path_lst.index(i)
+    df1_json = pd.read_json(data_folder_path_lst[n] + '/all_metrics.json', orient='index')
+    df1_json = df1_json.drop(['low_coverage_regions', 'insert_size_histogram'], axis = 1)
+    df1_json['fc'] = FCs[n]
+    df1_json['recommended_name'] = df1_json['fc'] + '_' + df1_json['barcode']
+    df_json = pd.concat([df_json, df1_json])
+df_json = df_json.reset_index()
+df_json = df_json.drop('index', axis=1)
+
+#merge seqpipeline derived dataframes
 df_final = df_all.merge(df, how='left', on='recommended_name')
 df_final = df_final.merge(df_dupe, how='left', on='recommended_name')
+df_final = df_final.merge(df_json, how='left', on='recommended_name')
 
-
-# # onprem data
+#make df of onprem data
 onprem_df = pd.read_csv(onprem_csv_path)
 onprem_df['recommended_name'] = onprem_df['RUN_NAME'] + '_' + onprem_df['BARCODE']
 onprem_df['old_mapping_efficiency'] = onprem_df['DUPLICATE_CLONES_DENOMINATOR'] / onprem_df['NUM_ELIGIBLE_READS']
 onprem_df['old_clonality'] = onprem_df['DUPLICATE_CLONES_NUMERATOR'] / onprem_df['DUPLICATE_CLONES_DENOMINATOR']
 
-#Merge cloud and onprem data
+#merge cloud and onprem data
 df_final = df_final.merge(onprem_df, how='left', on='recommended_name')
-# df_final['match_count_2x'] = df_final['match_count']*2
-# df_final['calc_num_mapped_clone_reads'] = df_final['match_count_2x'] - df_final['SECONDARY_OR_SUPPLEMENTARY_RDS'] - df_final['UNMAPPED_READS'] - df_final['UNPAIRED_READ_DUPLICATES'] - df_final['READ_PAIR_DUPLICATES']
-# df_final['calc_mapping_efficiency'] = (df_final['calc_num_mapped_clone_reads'] + df_final['READ_PAIR_DUPLICATES']) / df_final['match_count_2x']
 
-# prep final df and do mapped clone reads calculation
-df_final_out = df_final.loc[:,['recommended_name', 'PF Clusters', 'Yield (Mbases)', '% PFClusters', '% >= Q30bases', 'Mean QualityScore', 'sum_target_reads', 'UNPAIRED_READS_EXAMINED',
+#prep final df
+df_final_out = df_final.loc[:,['recommended_name', 'lane', 'match_count', 'PF Clusters', 'Yield (Mbases)', 'sum_target_reads', 'UNPAIRED_READS_EXAMINED',
                                'READ_PAIRS_EXAMINED', 'SECONDARY_OR_SUPPLEMENTARY_RDS', 'UNMAPPED_READS', 'UNPAIRED_READ_DUPLICATES', 'READ_PAIR_DUPLICATES', 
-                               'READ_PAIR_OPTICAL_DUPLICATES', 'PERCENT_DUPLICATION', 'AUTO_COMMENTS', 'USER_COMMENTS', 'SEQ_STATUS', 'LR_STATUS', 'NUM_MAPPED_CLONE_READS','NUM_ELIGIBLE_READS', 
+                               'PERCENT_DUPLICATION', 'AUTO_COMMENTS', 'USER_COMMENTS', 'SEQ_STATUS', 'LR_STATUS', 'NUM_MAPPED_CLONE_READS','NUM_ELIGIBLE_READS', 
                                'TARGET_NUM_ALLELES_CV', 'DUPLICATE_CLONES_NUMERATOR', 'DUPLICATE_CLONES_DENOMINATOR', 'old_mapping_efficiency', 'old_clonality' ]]
 df_final_out.to_csv(output_file)
