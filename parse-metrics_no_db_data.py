@@ -4,14 +4,14 @@ import csv
 import pandas as pd
 import glob
 
-#data_folder_path = sys.argv[1]
-data_folder_path = '/mnt/c/Users/willl/Downloads/data_comp_200827'
+data_folder_path = sys.argv[1]
+#data_folder_path = '/mnt/c/Users/willl/Downloads/ns_occupancy'
 data_folder_path_lst = glob.glob(data_folder_path + '/*')
 #onprem_csv_path = sys.argv[2]
-onprem_csv_path = '/mnt/c/Users/willl/Downloads/on-prem_run_metrics_data_20200909.csv'
-#output_file = sys.argv[3]
-output_file = '/mnt/c/Users/willl/Downloads/test20201006_3.csv'
-##example usage:  python parse-metrics.py /mnt/c/Users/willl/Downloads/data_comp_200827 /mnt/c/Users/willl/Downloads/on-prem_run_metrics_data_20200909.csv /mnt/c/Users/willl/Downloads/test.csv
+#onprem_csv_path = '/mnt/c/Users/willl/Downloads/on-prem_run_metrics_data_20200909.csv'
+output_file = sys.argv[2]
+#output_file = '/mnt/c/Users/willl/Downloads/ns_occupancy_test.csv'
+##example usage:  python parse-metrics_no_db_data.py /mnt/c/Users/willl/Downloads/data_comp_200827 /mnt/c/Users/willl/Downloads/on-prem_run_metrics_data_20200909.csv /mnt/c/Users/willl/Downloads/test.csv
 ## exec(open('/home/wlandon/Projects/Metrics_Compare_20200831/parse-metrics.py').read())
 
 #build data frame of *target_read_counts.csv - 1 per index set 
@@ -43,9 +43,10 @@ for i in data_folder_path_lst:
     with open(data_folder_path_lst[n] + "/" + "all_barcodes.html") as fp:
         df1_lst = pd.read_html(fp)
     df1_all = df1_lst[2]
-    df1_all['recommended_name'] = FCs[n] + '_' + df1_all['Barcode sequence']
+    df1_all['recommended_name'] = FCs[n] + "_" + df1_all['Sample'].str[4:]
+    #df1_all['recommended_name'] = df1_all['recommended_name'].str.split('+').str[0] + df1_all['recommended_name'].str.split('+').str[1]
+    df1_all = df1_all[df1_all['Barcode sequence'] != 'unknown']
     df_all = pd.concat([df_all, df1_all])
-    df_all = df_all[df_all['Barcode sequence'] != 'unknown']
 
 #sum all_barcodes.htlm lane 1 and 2 results for a single set of statistics per sample
 df_all = df_all.loc[:, ['Lane', 'PF Clusters', 'Yield (Mbases)', '% PFClusters', '% >= Q30bases', 'Mean QualityScore', 'recommended_name']]
@@ -84,17 +85,17 @@ df_final = df_final.merge(df_dupe, how='left', on='recommended_name')
 df_final = df_final.merge(df_json, how='left', on='recommended_name')
 
 #make df of onprem data
-onprem_df = pd.read_csv(onprem_csv_path)
-onprem_df['recommended_name'] = onprem_df['RUN_NAME'] + '_' + onprem_df['BARCODE']
-onprem_df['old_mapping_efficiency'] = onprem_df['DUPLICATE_CLONES_DENOMINATOR'] / onprem_df['NUM_ELIGIBLE_READS']
-onprem_df['old_clonality'] = onprem_df['DUPLICATE_CLONES_NUMERATOR'] / onprem_df['DUPLICATE_CLONES_DENOMINATOR']
+# onprem_df = pd.read_csv(onprem_csv_path)
+# onprem_df['recommended_name'] = onprem_df['RUN_NAME'] + '_' + onprem_df['BARCODE']
+# onprem_df['old_mapping_efficiency'] = onprem_df['DUPLICATE_CLONES_DENOMINATOR'] / onprem_df['NUM_ELIGIBLE_READS']
+# onprem_df['old_clonality'] = onprem_df['DUPLICATE_CLONES_NUMERATOR'] / onprem_df['DUPLICATE_CLONES_DENOMINATOR']
 
-#merge cloud and onprem data
-df_final = df_final.merge(onprem_df, how='left', on='recommended_name')
+# #merge cloud and onprem data
+# df_final = df_final.merge(onprem_df, how='left', on='recommended_name')
 
-#prep final df
-df_final_out = df_final.loc[:,['recommended_name', 'lane', 'match_count', 'PF Clusters', 'Yield (Mbases)', 'sum_target_reads', 'UNPAIRED_READS_EXAMINED',
-                               'READ_PAIRS_EXAMINED', 'SECONDARY_OR_SUPPLEMENTARY_RDS', 'UNMAPPED_READS', 'UNPAIRED_READ_DUPLICATES', 'READ_PAIR_DUPLICATES', 
-                               'PERCENT_DUPLICATION', 'AUTO_COMMENTS', 'USER_COMMENTS', 'SEQ_STATUS', 'LR_STATUS', 'NUM_MAPPED_CLONE_READS','NUM_ELIGIBLE_READS', 
-                               'TARGET_NUM_ALLELES_CV', 'DUPLICATE_CLONES_NUMERATOR', 'DUPLICATE_CLONES_DENOMINATOR', 'old_mapping_efficiency', 'old_clonality' ]]
-df_final_out.to_csv(output_file)
+# #prep final df
+# df_final_out = df_final.loc[:,['recommended_name', 'lane', 'match_count', 'PF Clusters', 'Yield (Mbases)', 'sum_target_reads', 'UNPAIRED_READS_EXAMINED',
+#                                'READ_PAIRS_EXAMINED', 'SECONDARY_OR_SUPPLEMENTARY_RDS', 'UNMAPPED_READS', 'UNPAIRED_READ_DUPLICATES', 'READ_PAIR_DUPLICATES', 
+#                                'PERCENT_DUPLICATION', 'AUTO_COMMENTS', 'USER_COMMENTS', 'SEQ_STATUS', 'LR_STATUS', 'NUM_MAPPED_CLONE_READS','NUM_ELIGIBLE_READS', 
+#                                'TARGET_NUM_ALLELES_CV', 'DUPLICATE_CLONES_NUMERATOR', 'DUPLICATE_CLONES_DENOMINATOR', 'old_mapping_efficiency', 'old_clonality' ]]
+df_final.to_csv(output_file)
