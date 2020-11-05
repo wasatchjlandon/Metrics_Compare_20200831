@@ -1,5 +1,7 @@
 # Add metrics for mapping efficiency and clonality.
  ## MPD-115
+  ## This readme describes a data collection/collation that was carried during development of the parse-metrics_no_db_data.py script
+  
  Ticket:
  >* https://mygn.atlassian.net/browse/MPD-115?atlOrigin=eyJpIjoiYWI4NDY5YTM4Y2U2NGE4NGI1NzQzZWI5MDY3OGQzMWMiLCJwIjoiaiJ9
  
