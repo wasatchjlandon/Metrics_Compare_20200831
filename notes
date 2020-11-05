@@ -1,0 +1,11 @@
+cd /mnt/c/Users/willl/Downloads/ns_occupancy/HLNHFDRXX
+
+dx select --name spar_dts_regression_2020_10 --level VIEW
+dx cd dts-spar6525-job19786-HLNHFDRXX_SPAR_EXP6525/200919_A01175_0084_AHLNHFDRXX/analysis/metrics
+
+dx download all_metrics.json
+dx download *target_read_counts.csv
+
+dx cd ../alignments
+dx download all_barcodes.html
+
