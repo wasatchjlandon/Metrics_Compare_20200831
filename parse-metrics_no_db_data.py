@@ -4,14 +4,14 @@ import csv
 import pandas as pd
 import glob
 
-#data_folder_path = sys.argv[1]
-data_folder_path = '/mnt/c/Users/willl/Downloads/ns_occupancy'
+data_folder_path = sys.argv[1]
+#data_folder_path = '/mnt/c/Users/willl/Downloads/ns_occupancy'
 data_folder_path_lst = glob.glob(data_folder_path + '/*')
 #onprem_csv_path = sys.argv[2]
 #onprem_csv_path = '/mnt/c/Users/willl/Downloads/on-prem_run_metrics_data_20200909.csv'
-#output_file = sys.argv[3]
-output_file = '/mnt/c/Users/willl/Downloads/ns_occupancy_test.csv'
-##example usage:  python parse-metrics.py /mnt/c/Users/willl/Downloads/data_comp_200827 /mnt/c/Users/willl/Downloads/on-prem_run_metrics_data_20200909.csv /mnt/c/Users/willl/Downloads/test.csv
+output_file = sys.argv[2]
+#output_file = '/mnt/c/Users/willl/Downloads/ns_occupancy_test.csv'
+##example usage:  python parse-metrics_no_db_data.py /mnt/c/Users/willl/Downloads/data_comp_200827 /mnt/c/Users/willl/Downloads/on-prem_run_metrics_data_20200909.csv /mnt/c/Users/willl/Downloads/test.csv
 ## exec(open('/home/wlandon/Projects/Metrics_Compare_20200831/parse-metrics.py').read())
 
 #build data frame of *target_read_counts.csv - 1 per index set 
