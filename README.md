@@ -13,9 +13,7 @@ Installation
 ###
 Example Usage:
 ```
-python parse-metrics_no_db_data.py 
-/mnt/c/Users/willl/Downloads/data_comp_200827 
-/mnt/c/Users/willl/Downloads/output.csv
+python parse-metrics_no_db_data.py example_data /mnt/c/Users/willl/Downloads/output.csv
 ```
 
 ### Directory structure (avoids renaming files by using a FC directory heirarchy):
